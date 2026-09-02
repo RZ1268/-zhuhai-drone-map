@@ -9,8 +9,8 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-  <link rel="stylesheet" href="./styles.css?v=20260902-2316" />
-  <link rel="stylesheet" href="./mobile-v2.css?v=20260902-2316" />
+  <link rel="stylesheet" href="./styles.css?v=20260902-2322" />
+  <link rel="stylesheet" href="./mobile-v2.css?v=20260902-2322" />
 </head>
 <body>
   <main id="app">
@@ -21,121 +21,34 @@
         <button id="layersBtn" class="icon-btn" aria-label="图层">▱</button>
       </div>
     </header>
-
     <section class="map-wrap">
       <div id="map"></div>
       <div class="map-hint" id="mapHint">◎ 点地图选起飞点 · 自动做空域 + 天气初筛</div>
       <button id="layerCount" class="layer-count">▱ <b>加载中</b> ›</button>
-      <div class="legend">
-        <span><i class="blue"></i>UOM蓝区</span><span><i class="red"></i>0–100m禁飞</span><span><i class="orange"></i>100–500m报备</span><span><i class="yellow"></i>需核验</span>
-      </div>
-      <div id="mobileDock" class="mobile-dock">
-        <div><b id="dockTitle">先选起飞位置</b><small id="dockSub">点地图或定位当前位置</small></div>
-        <button id="detailsBtn">查看</button>
-      </div>
+      <div class="legend"><span><i class="blue"></i>UOM蓝区</span><span><i class="red"></i>0–100m禁飞</span><span><i class="orange"></i>100–500m报备</span><span><i class="yellow"></i>需核验</span></div>
+      <div id="mobileDock" class="mobile-dock"><div><b id="dockTitle">先选起飞位置</b><small id="dockSub">点地图或定位当前位置</small></div><button id="detailsBtn">查看</button></div>
     </section>
-
     <aside id="panel" class="panel">
       <div class="panel-head"><div><b>飞前判断</b><small id="coordText">尚未选点</small></div><button id="closePanel" aria-label="关闭">×</button></div>
       <section id="riskCard" class="risk-card neutral"><small>即时判断</small><h1>先选一个起飞位置</h1><p>地图会叠加UOM蓝区、铁路规则和实时天气。</p></section>
-
-      <section class="card">
-        <div class="card-title"><b>适飞区数据</b><span class="source-badge" id="uomModeBadge">本地参考</span></div>
-        <p id="uomStatus">默认显示本地蓝区参考。可在“图层”里粘贴你自己的UOM空域token，直接叠加官方广东实时蓝区。</p>
-        <a class="text-link" href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM官方查询 ↗</a>
-      </section>
-
-      <section class="card">
-        <div class="card-title"><b>最近铁路</b><small>直线距离</small></div>
-        <div id="railDistance" class="metrics"><span>—</span></div>
-      </section>
-
-      <section class="card">
-        <div class="card-title"><b>实时天气</b><small id="weatherTime">—</small></div>
-        <div id="weatherBox" class="weather-grid"><span>选点后加载</span></div>
-      </section>
-
-      <section class="card report-card">
-        <div class="card-title"><b>一键报备模板</b><small>直接复制</small></div>
-        <div class="form-grid">
-          <label>日期<input id="reportDate" type="date" /></label>
-          <label>时段<input id="reportTime" value="09:00–10:00" /></label>
-          <label>申请人<input id="pilot" placeholder="姓名" /></label>
-          <label>电话<input id="phone" inputmode="tel" placeholder="手机号" /></label>
-          <label>最大高度<input id="altitude" type="number" value="120" min="20" max="500" /></label>
-          <label>最大半径km<input id="radiusKm" type="number" value="1" min="0.1" max="20" step="0.1" /></label>
-        </div>
-        <textarea id="reportText" readonly></textarea>
-        <button id="copyReport" class="primary">复制报备模板</button>
-      </section>
-
-      <section class="card">
-        <div class="card-title"><b>我的区域</b><small>本机保存</small></div>
-        <div class="row-actions"><button id="importBtn" class="btn">导入GeoJSON</button><button id="exportBtn" class="btn">导出</button></div>
-        <input id="fileInput" type="file" accept=".json,.geojson" hidden />
-        <div id="customList" class="custom-list"></div>
-      </section>
+      <section class="card"><div class="card-title"><b>适飞区数据</b><span class="source-badge" id="uomModeBadge">本地参考</span></div><p id="uomStatus">默认显示本地蓝区参考。可在“图层”里粘贴你自己的UOM空域token，直接叠加官方广东实时蓝区。</p><a class="text-link" href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM官方查询 ↗</a></section>
+      <section class="card"><div class="card-title"><b>最近铁路</b><small>直线距离</small></div><div id="railDistance" class="metrics"><span>—</span></div></section>
+      <section class="card"><div class="card-title"><b>实时天气</b><small id="weatherTime">—</small></div><div id="weatherBox" class="weather-grid"><span>选点后加载</span></div></section>
+      <section class="card report-card"><div class="card-title"><b>一键报备模板</b><small>直接复制</small></div><div class="form-grid"><label>日期<input id="reportDate" type="date" /></label><label>时段<input id="reportTime" value="09:00–10:00" /></label><label>申请人<input id="pilot" placeholder="姓名" /></label><label>电话<input id="phone" inputmode="tel" placeholder="手机号" /></label><label>最大高度<input id="altitude" type="number" value="120" min="20" max="500" /></label><label>最大半径km<input id="radiusKm" type="number" value="1" min="0.1" max="20" step="0.1" /></label></div><textarea id="reportText" readonly></textarea><button id="copyReport" class="primary">复制报备模板</button></section>
+      <section class="card"><div class="card-title"><b>我的区域</b><small>本机保存</small></div><div class="row-actions"><button id="importBtn" class="btn">导入GeoJSON</button><button id="exportBtn" class="btn">导出</button></div><input id="fileInput" type="file" accept=".json,.geojson" hidden /><div id="customList" class="custom-list"></div></section>
     </aside>
-
-    <div id="layersSheet" class="sheet hidden">
-      <div class="sheet-card">
-        <div class="sheet-head"><b>地图图层</b><button id="closeLayers">×</button></div>
-        <label><input type="checkbox" id="toggleBlue" checked /> 本地UOM蓝区参考</label>
-        <label><input type="checkbox" id="toggleRailOrange" checked /> 铁路100–500米报备</label>
-        <label><input type="checkbox" id="toggleRailRed" checked /> 铁路0–100米禁飞</label>
-        <label><input type="checkbox" id="toggleOther" checked /> 其他风险参考层</label>
-
-        <div class="uom-live-box">
-          <div class="uom-live-title"><b>UOM官方广东实时蓝区</b><span id="uomLiveState">未连接</span></div>
-          <input id="uomToken" class="uom-token" type="password" autocomplete="off" placeholder="粘贴你自己的UOM空域图层 token" />
-          <div class="uom-live-actions">
-            <button id="saveUomToken" class="primary small-primary">连接官方蓝区</button>
-            <button id="clearUomToken" class="btn">清除</button>
-          </div>
-          <p>token只保存在你当前浏览器本机，不写入GitHub。UOM token失效后重新粘贴即可；没有token时仍显示本地蓝区参考。</p>
-          <a class="text-link" href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM获取/核验空域 ↗</a>
-        </div>
-
-        <button id="satelliteBtn" class="btn wide">切换卫星图</button>
-        <p>官方实时图层优先用于看蓝区；铁路0–100米红带、100–500米橙带是本工具额外叠加规则。最终飞行仍以UOM、临时管制和现场要求为准。</p>
-      </div>
-    </div>
+    <div id="layersSheet" class="sheet hidden"><div class="sheet-card"><div class="sheet-head"><b>地图图层</b><button id="closeLayers">×</button></div><label><input type="checkbox" id="toggleBlue" checked /> 本地UOM蓝区参考</label><label><input type="checkbox" id="toggleRailOrange" checked /> 铁路100–500米报备</label><label><input type="checkbox" id="toggleRailRed" checked /> 铁路0–100米禁飞</label><label><input type="checkbox" id="toggleOther" checked /> 其他风险参考层</label><div class="uom-live-box"><div class="uom-live-title"><b>UOM官方广东实时蓝区</b><span id="uomLiveState">未连接</span></div><input id="uomToken" class="uom-token" type="password" autocomplete="off" placeholder="粘贴你自己的UOM空域图层 token" /><div class="uom-live-actions"><button id="saveUomToken" class="primary small-primary">连接官方蓝区</button><button id="clearUomToken" class="btn">清除</button></div><p>token只保存在你当前浏览器本机，不写入GitHub。没有token时仍显示本地蓝区参考。</p><a class="text-link" href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM获取/核验空域 ↗</a></div><button id="satelliteBtn" class="btn wide">切换卫星图</button><p>铁路0–100米红带、100–500米橙带是本工具额外叠加规则。最终飞行仍以UOM、临时管制和现场要求为准。</p></div></div>
   </main>
-
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-  <script>
-  (() => {
-    const hint = () => document.getElementById('mapHint');
-    const counter = () => document.querySelector('#layerCount b');
-    const loadScript = (src) => new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = src;
-      s.async = false;
-      s.onload = resolve;
-      s.onerror = () => reject(new Error('load failed: ' + src));
-      document.body.appendChild(s);
-    });
-    async function boot() {
-      try {
-        if (!window.pako) {
-          try { await loadScript('https://unpkg.com/pako@2.1.0/dist/pako.min.js'); }
-          catch (_) { await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js'); }
-        }
-        await loadScript('./data.js?v=20260902-2316');
-        if (!window.AIRWISE_DATA || !window.AIRWISE_DATA.uomRects?.length || !window.AIRWISE_DATA.railways?.length) {
-          throw new Error('airspace data empty');
-        }
-        await loadScript('./app.js?v=20260902-2316');
-      } catch (err) {
-        console.error('[AIRWISE boot]', err);
-        if (hint()) hint().textContent = '⚠ 空域数据加载失败 · 点此刷新';
-        if (counter()) counter().textContent = '数据失败';
-        if (hint()) hint().onclick = () => location.reload();
-      }
-    }
-    boot();
-  })();
-  </script>
+  <script src="./data-base.js?v=20260902-2322"></script>
+  <script src="./data-uom-1.js?v=20260902-2322"></script>
+  <script src="./data-uom-2.js?v=20260902-2322"></script>
+  <script src="./data-uom-3.js?v=20260902-2322"></script>
+  <script src="./data-uom-4.js?v=20260902-2322"></script>
+  <script src="./data-uom-5.js?v=20260902-2322"></script>
+  <script src="./data-rail-gz-1.js?v=20260902-2322"></script>
+  <script src="./data-rail-gz-2.js?v=20260902-2322"></script>
+  <script src="./app.js?v=20260902-2322"></script>
 </body>
 </html>
