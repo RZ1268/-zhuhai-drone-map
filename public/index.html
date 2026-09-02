@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#07100e" />
+  <title>珠海安心飞地图</title>
+  <meta name="description" content="珠海无人机空域、铁路风险、天气与报备辅助地图" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main id="app">
+    <header class="topbar">
+      <div class="brand"><div class="logo">◎</div><div><b>珠海安心飞地图</b><small>AIRWISE · ZHUHAI</small></div></div>
+      <div class="top-actions">
+        <button id="locateBtn" class="btn">⌖ <span>定位</span></button>
+        <button id="layersBtn" class="icon-btn" aria-label="图层">▱</button>
+      </div>
+    </header>
+
+    <section class="map-wrap">
+      <div id="map"></div>
+      <div class="map-hint">◎ 点击地图任意位置，立即做空域 + 天气初筛</div>
+      <button id="layerCount" class="layer-count">▱ <b>0</b> 个图层已绘制 ›</button>
+      <div class="legend">
+        <span><i class="blue"></i>UOM蓝区</span><span><i class="red"></i>0–100m禁飞</span><span><i class="orange"></i>100–500m报备</span><span><i class="yellow"></i>需核验</span>
+      </div>
+      <div id="mobileDock" class="mobile-dock">
+        <div><b id="dockTitle">先选起飞位置</b><small id="dockSub">点地图或定位当前位置</small></div>
+        <button id="detailsBtn">查看</button>
+      </div>
+    </section>
+
+    <aside id="panel" class="panel">
+      <div class="panel-head"><div><b>飞前判断</b><small id="coordText">尚未选点</small></div><button id="closePanel" aria-label="关闭">×</button></div>
+      <section id="riskCard" class="risk-card neutral"><small>即时判断</small><h1>先选一个起飞位置</h1><p>地图会叠加UOM蓝区参考、铁路规则和实时天气。</p></section>
+
+      <section class="card">
+        <div class="card-title"><b>适飞区数据</b><a href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM ↗</a></div>
+        <p id="uomStatus">当前使用本地UOM蓝区复现数据。它不是实时官方接口；起飞前仍需在UOM核验。</p>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><b>最近铁路</b><small>直线距离</small></div>
+        <div id="railDistance" class="metrics"><span>—</span></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><b>实时天气</b><small id="weatherTime">—</small></div>
+        <div id="weatherBox" class="weather-grid"><span>选点后加载</span></div>
+      </section>
+
+      <section class="card report-card">
+        <div class="card-title"><b>一键报备模板</b><small>直接复制</small></div>
+        <div class="form-grid">
+          <label>日期<input id="reportDate" type="date" /></label>
+          <label>时段<input id="reportTime" value="09:00–10:00" /></label>
+          <label>申请人<input id="pilot" placeholder="姓名" /></label>
+          <label>电话<input id="phone" inputmode="tel" placeholder="手机号" /></label>
+          <label>最大高度<input id="altitude" type="number" value="120" min="20" max="500" /></label>
+          <label>最大半径km<input id="radiusKm" type="number" value="1" min="0.1" max="20" step="0.1" /></label>
+        </div>
+        <textarea id="reportText" readonly></textarea>
+        <button id="copyReport" class="primary">复制报备模板</button>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><b>我的区域</b><small>本机保存</small></div>
+        <div class="row-actions"><button id="importBtn" class="btn">导入GeoJSON</button><button id="exportBtn" class="btn">导出</button></div>
+        <input id="fileInput" type="file" accept=".json,.geojson" hidden />
+        <div id="customList" class="custom-list"></div>
+      </section>
+    </aside>
+
+    <div id="layersSheet" class="sheet hidden">
+      <div class="sheet-card">
+        <div class="sheet-head"><b>地图图层</b><button id="closeLayers">×</button></div>
+        <label><input type="checkbox" id="toggleBlue" checked /> UOM蓝色适飞区参考</label>
+        <label><input type="checkbox" id="toggleRailOrange" checked /> 铁路100–500米报备</label>
+        <label><input type="checkbox" id="toggleRailRed" checked /> 铁路0–100米禁飞</label>
+        <label><input type="checkbox" id="toggleOther" checked /> 其他风险参考层</label>
+        <button id="satelliteBtn" class="btn wide">切换卫星图</button>
+        <p>蓝区来自本地复现数据，不等于UOM实时接口。铁路规则按本工具设定叠加。</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
