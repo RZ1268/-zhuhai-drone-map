@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <!-- airwise-autodeploy-check: 2026-09-02T22:42+08:00 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#07100e" />
@@ -24,8 +23,8 @@
 
     <section class="map-wrap">
       <div id="map"></div>
-      <div class="map-hint">◎ 点击地图任意位置，立即做空域 + 天气初筛</div>
-      <button id="layerCount" class="layer-count">▱ <b>0</b> 个图层已绘制 ›</button>
+      <div class="map-hint">◎ 点地图选起飞点 · 自动做空域 + 天气初筛</div>
+      <button id="layerCount" class="layer-count">▱ <b>0</b> 个图层 ›</button>
       <div class="legend">
         <span><i class="blue"></i>UOM蓝区</span><span><i class="red"></i>0–100m禁飞</span><span><i class="orange"></i>100–500m报备</span><span><i class="yellow"></i>需核验</span>
       </div>
@@ -37,11 +36,12 @@
 
     <aside id="panel" class="panel">
       <div class="panel-head"><div><b>飞前判断</b><small id="coordText">尚未选点</small></div><button id="closePanel" aria-label="关闭">×</button></div>
-      <section id="riskCard" class="risk-card neutral"><small>即时判断</small><h1>先选一个起飞位置</h1><p>地图会叠加UOM蓝区参考、铁路规则和实时天气。</p></section>
+      <section id="riskCard" class="risk-card neutral"><small>即时判断</small><h1>先选一个起飞位置</h1><p>地图会叠加UOM蓝区、铁路规则和实时天气。</p></section>
 
       <section class="card">
-        <div class="card-title"><b>适飞区数据</b><a href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM ↗</a></div>
-        <p id="uomStatus">当前使用本地UOM蓝区复现数据。它不是实时官方接口；起飞前仍需在UOM核验。</p>
+        <div class="card-title"><b>适飞区数据</b><span class="source-badge" id="uomModeBadge">本地参考</span></div>
+        <p id="uomStatus">默认显示本地蓝区参考。可在“图层”里粘贴你自己的UOM空域token，直接叠加官方广东实时蓝区。</p>
+        <a class="text-link" href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM官方查询 ↗</a>
       </section>
 
       <section class="card">
@@ -79,12 +79,24 @@
     <div id="layersSheet" class="sheet hidden">
       <div class="sheet-card">
         <div class="sheet-head"><b>地图图层</b><button id="closeLayers">×</button></div>
-        <label><input type="checkbox" id="toggleBlue" checked /> UOM蓝色适飞区参考</label>
+        <label><input type="checkbox" id="toggleBlue" checked /> 本地UOM蓝区参考</label>
         <label><input type="checkbox" id="toggleRailOrange" checked /> 铁路100–500米报备</label>
         <label><input type="checkbox" id="toggleRailRed" checked /> 铁路0–100米禁飞</label>
         <label><input type="checkbox" id="toggleOther" checked /> 其他风险参考层</label>
+
+        <div class="uom-live-box">
+          <div class="uom-live-title"><b>UOM官方广东实时蓝区</b><span id="uomLiveState">未连接</span></div>
+          <input id="uomToken" class="uom-token" type="password" autocomplete="off" placeholder="粘贴你自己的UOM空域图层 token" />
+          <div class="uom-live-actions">
+            <button id="saveUomToken" class="primary small-primary">连接官方蓝区</button>
+            <button id="clearUomToken" class="btn">清除</button>
+          </div>
+          <p>token只保存在你当前浏览器本机，不写入GitHub。UOM token失效后重新粘贴即可；没有token时仍显示本地蓝区参考。</p>
+          <a class="text-link" href="https://uom.caac.gov.cn/" target="_blank" rel="noreferrer">打开UOM获取/核验空域 ↗</a>
+        </div>
+
         <button id="satelliteBtn" class="btn wide">切换卫星图</button>
-        <p>蓝区来自本地复现数据，不等于UOM实时接口。铁路规则按本工具设定叠加。</p>
+        <p>官方实时图层优先用于看蓝区；铁路0–100米红带、100–500米橙带是本工具额外叠加规则。最终飞行仍以UOM、临时管制和现场要求为准。</p>
       </div>
     </div>
   </main>
