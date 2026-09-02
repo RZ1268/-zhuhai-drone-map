@@ -9,8 +9,8 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-  <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./mobile-v2.css" />
+  <link rel="stylesheet" href="./styles.css?v=20260902-2316" />
+  <link rel="stylesheet" href="./mobile-v2.css?v=20260902-2316" />
 </head>
 <body>
   <main id="app">
@@ -24,8 +24,8 @@
 
     <section class="map-wrap">
       <div id="map"></div>
-      <div class="map-hint">◎ 点地图选起飞点 · 自动做空域 + 天气初筛</div>
-      <button id="layerCount" class="layer-count">▱ <b>0</b> 个图层 ›</button>
+      <div class="map-hint" id="mapHint">◎ 点地图选起飞点 · 自动做空域 + 天气初筛</div>
+      <button id="layerCount" class="layer-count">▱ <b>加载中</b> ›</button>
       <div class="legend">
         <span><i class="blue"></i>UOM蓝区</span><span><i class="red"></i>0–100m禁飞</span><span><i class="orange"></i>100–500m报备</span><span><i class="yellow"></i>需核验</span>
       </div>
@@ -104,8 +104,38 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
-  <script src="./data.js"></script>
-  <script src="./app.js"></script>
+  <script>
+  (() => {
+    const hint = () => document.getElementById('mapHint');
+    const counter = () => document.querySelector('#layerCount b');
+    const loadScript = (src) => new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = false;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error('load failed: ' + src));
+      document.body.appendChild(s);
+    });
+    async function boot() {
+      try {
+        if (!window.pako) {
+          try { await loadScript('https://unpkg.com/pako@2.1.0/dist/pako.min.js'); }
+          catch (_) { await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js'); }
+        }
+        await loadScript('./data.js?v=20260902-2316');
+        if (!window.AIRWISE_DATA || !window.AIRWISE_DATA.uomRects?.length || !window.AIRWISE_DATA.railways?.length) {
+          throw new Error('airspace data empty');
+        }
+        await loadScript('./app.js?v=20260902-2316');
+      } catch (err) {
+        console.error('[AIRWISE boot]', err);
+        if (hint()) hint().textContent = '⚠ 空域数据加载失败 · 点此刷新';
+        if (counter()) counter().textContent = '数据失败';
+        if (hint()) hint().onclick = () => location.reload();
+      }
+    }
+    boot();
+  })();
+  </script>
 </body>
 </html>
