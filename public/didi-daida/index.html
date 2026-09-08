@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="滴滴代打">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="./styles.css">
+  <title>滴滴代打</title>
+</head>
+<body>
+<div id="app" class="app">
+
+  <section id="homeScreen" class="screen">
+    <header class="header">
+      <div class="headerTop">
+        <button class="iconBtn" id="profileBtn">●</button>
+        <div class="brand">
+          <div class="brandName">滴滴代打</div>
+          <div class="brandSub">有事别上头，先叫个师傅</div>
+        </div>
+        <button class="iconBtn bubbleBtn">💬<span class="dotBadge"></span></button>
+      </div>
+      <nav class="tabs">
+        <button class="tab active">代打</button>
+        <button class="tab">代骂</button>
+        <button class="tab">代撑场</button>
+        <button class="tab">代讲理</button>
+        <button class="tab">更多⌄</button>
+      </nav>
+    </header>
+
+    <section class="mapWrap">
+      <div id="map"></div>
+
+      <div class="mapStatus glass">
+        <div class="nearTitle">在你附近有 <b id="nearCount">23</b> 名打手</div>
+        <div class="nearSub">最快 <b id="nearEta">3</b> 分钟接单</div>
+      </div>
+
+      <button class="mapFloat safetyBtn">🛡 安全中心</button>
+      <button class="mapFloat locateBtn" id="locateBtn">◎</button>
+    </section>
+
+    <main class="homeSheet">
+      <div class="grabber"></div>
+
+      <div class="scheduleTabs">
+        <button class="active">现在</button>
+        <button>预约</button>
+        <button>帮我叫</button>
+      </div>
+
+      <section class="routeCard">
+        <div class="routeRow">
+          <span class="routeDot teal"></span>
+          <div class="routeText">
+            <small>我的位置</small>
+            <strong id="currentAddress">正在获取你的位置…</strong>
+          </div>
+        </div>
+        <div class="routeLine"></div>
+        <div class="routeRow">
+          <span class="routeDot orange"></span>
+          <div class="routeText grow">
+            <small>对方在哪</small>
+            <input id="targetInput" placeholder="输入对方地址" autocomplete="off">
+          </div>
+          <button class="clearInput hidden" id="clearTarget">×</button>
+        </div>
+      </section>
+
+      <div id="searchResults" class="searchResults hidden"></div>
+
+      <section class="quickTargets">
+        <button data-q="烧烤店">🍢 烧烤店门口</button>
+        <button data-q="停车场">🅿️ 停车场</button>
+        <button data-q="商场">🏬 商场楼下</button>
+        <button data-q="写字楼">🏢 写字楼</button>
+      </section>
+
+      <div class="sectionHead">
+        <div>
+          <h2>选择打手类型</h2>
+          <p id="distanceHint">选个套餐，师傅马上出发</p>
+        </div>
+        <button class="linkBtn" id="priceExplain">价格说明 ›</button>
+      </div>
+
+      <section class="serviceList">
+        <article class="service active" data-name="经济型" data-price="198">
+          <div class="portrait p1">
+            <div class="headArt">
+              <span class="hair"></span><span class="eye e1"></span><span class="eye e2"></span><span class="mouth"></span>
+            </div>
+          </div>
+          <div class="serviceInfo">
+            <div class="serviceTitle">经济型 <span class="tag">大众常选</span></div>
+            <div class="serviceDesc">单人出发，主打快准狠，适合普通口角升级</div>
+            <div class="serviceMeta">预计 20 分钟内到达 · 已打 1,284 人</div>
+          </div>
+          <div class="servicePrice"><b>¥198</b><small>起</small><button>选择</button></div>
+        </article>
+
+        <article class="service" data-name="舒适型" data-price="398">
+          <div class="portrait p2">
+            <div class="headArt">
+              <span class="hair"></span><span class="eye e1 bruise"></span><span class="eye e2"></span><span class="mouth"></span>
+            </div>
+          </div>
+          <div class="serviceInfo">
+            <div class="serviceTitle">舒适型 <span class="tag">销量领先</span></div>
+            <div class="serviceDesc">双人搭档轮班上场，服务不中断，体验更从容</div>
+            <div class="serviceMeta">预计 15 分钟内到达 · 已打 3,709 人</div>
+          </div>
+          <div class="servicePrice"><b>¥398</b><small>起</small><button>选择</button></div>
+        </article>
+
+        <article class="service" data-name="豪华型" data-price="888">
+          <div class="portrait p3">
+            <div class="headArt">
+              <span class="hair"></span><span class="eye e1 bruise"></span><span class="eye e2 bruise2"></span><span class="mouth cut"></span>
+            </div>
+          </div>
+          <div class="serviceInfo">
+            <div class="serviceTitle">豪华型 <span class="tag">高端优选</span></div>
+            <div class="serviceDesc">四人黑衣小队，统一着装，出场自带压迫感</div>
+            <div class="serviceMeta">预计 10 分钟内到达 · 已打 8,206 人</div>
+          </div>
+          <div class="servicePrice"><b>¥888</b><small>起</small><button>选择</button></div>
+        </article>
+
+        <article class="service" data-name="职业拳击手" data-price="1888">
+          <div class="portrait p4 glove">🥊</div>
+          <div class="serviceInfo">
+            <div class="serviceTitle">职业拳击手 <span class="tag">专业选手</span></div>
+            <div class="serviceDesc">职业选手出场，赛前称重、热身、出场音乐全套</div>
+            <div class="serviceMeta">预计 8 分钟内到达 · 73 场职业记录</div>
+          </div>
+          <div class="servicePrice"><b>¥1888</b><small>起</small><button>选择</button></div>
+        </article>
+
+        <article class="service" data-name="灭霸套餐" data-price="3888">
+          <div class="portrait p5 thanos">🫰</div>
+          <div class="serviceInfo">
+            <div class="serviceTitle">灭霸套餐 <span class="tag gold">终极服务</span></div>
+            <div class="serviceDesc">到场先打个响指，现场随机消失一半人</div>
+            <div class="serviceMeta">预计 5 分钟内到达 · 宇宙级售后</div>
+          </div>
+          <div class="servicePrice"><b>¥3888</b><small>起</small><button>选择</button></div>
+        </article>
+      </section>
+
+      <section class="benefits">
+        <div><span>🕶️</span><b>隐私保护</b><small>全程匿名</small></div>
+        <div><span>⚡</span><b>极速接单</b><small>最快3分钟</small></div>
+        <div><span>🧾</span><b>售后保障</b><small>支持补打</small></div>
+        <div><span>⚖️</span><b>法律支持</b><small>律师在线</small></div>
+      </section>
+    </main>
+
+    <div class="bottomBar">
+      <button id="callBtn" class="primaryCta">
+        <span id="callText">呼叫打手</span>
+        <b id="callPrice">· ¥198起</b>
+      </button>
+    </div>
+  </section>
+
+  <!-- matching -->
+  <section id="matchingScreen" class="screen hidden">
+    <div class="matchingMap" id="matchingMap"></div>
+    <div class="matchingSheet">
+      <div class="matchingBadge">
+        <span class="spinner"></span>
+      </div>
+      <h2>正在为你呼叫附近打手</h2>
+      <p id="matchingText">已通知 8 名师傅，正在抢单</p>
+      <div class="matchingStats">
+        <div><b id="mCount">23</b><span>附近在线</span></div>
+        <div><b>4.9</b><span>平均评分</span></div>
+        <div><b>12秒</b><span>平均接单</span></div>
+      </div>
+      <div class="matchProgress"><i id="progressBar"></i></div>
+      <button class="ghostBtn" id="cancelMatch">取消呼叫</button>
+    </div>
+  </section>
+
+  <!-- accepted -->
+  <section id="acceptedScreen" class="screen hidden">
+    <header class="orderHeader">
+      <button id="backAccepted">‹</button>
+      <div><b>师傅正在赶来</b><small id="orderStatus">订单进行中</small></div>
+      <button>•••</button>
+    </header>
+
+    <section class="acceptedMapWrap">
+      <div id="acceptedMap"></div>
+      <div class="etaCard glass">
+        <div><b id="etaMinutes">6</b><span>分钟</span></div>
+        <small>李师傅距你 <span id="etaDistance">1.8</span> km</small>
+      </div>
+    </section>
+
+    <main class="driverSheet">
+      <div class="grabber"></div>
+      <section class="driverTop">
+        <div class="driverAvatar">李</div>
+        <div class="driverMain">
+          <h2>李师傅 <span class="verified">✓</span></h2>
+          <p>社会气氛组 · 粤C·88D88</p>
+          <div class="rating">★ 4.85 <span>近30天好评率 98%</span></div>
+        </div>
+        <button class="circleAction" id="fakeCall">☎</button>
+      </section>
+
+      <section class="driverStats">
+        <div><b>327</b><span>已打人数</span></div>
+        <div><b>6年</b><span>从业经验</span></div>
+        <div><b>99%</b><span>准时率</span></div>
+      </section>
+
+      <div class="driverQuote">师傅留言：我还有两个路口。你先别自己上，等我到。</div>
+
+      <section class="orderInfoCard">
+        <div><span>服务</span><b id="acceptedService">经济型</b></div>
+        <div><span>对方地址</span><b id="acceptedTarget">未填写</b></div>
+        <div><span>预估价</span><b id="acceptedPrice">¥198起</b></div>
+      </section>
+
+      <div class="dualButtons">
+        <button id="messageBtn">发消息</button>
+        <button class="orangeBtn" id="arrivedBtn">师傅已到场</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- in progress -->
+  <section id="progressScreen" class="screen hidden">
+    <div class="progressHero">
+      <div class="boxingIcon">🥊</div>
+      <h1>服务进行中</h1>
+      <p id="progressHeadline">李师傅已到场</p>
+    </div>
+    <div class="progressCard">
+      <small>本单已持续</small>
+      <div id="timer">00:00</div>
+      <div class="liveStatus" id="liveStatus">现场状态：双方正在互相打量</div>
+    </div>
+    <div class="eventTimeline">
+      <div class="event active"><i></i><div><b>师傅到场</b><small>已完成</small></div></div>
+      <div class="event"><i></i><div><b>服务进行中</b><small id="eventText">正在处理</small></div></div>
+      <div class="event"><i></i><div><b>订单结算</b><small>等待中</small></div></div>
+    </div>
+    <button class="finishBtn" id="finishBtn">结束并结算</button>
+  </section>
+
+  <!-- receipt -->
+  <section id="receiptScreen" class="screen hidden">
+    <div class="receiptHero">
+      <div class="check">✓</div>
+      <h1>订单已完成</h1>
+      <p id="receiptSummary">本次服务顺利结束</p>
+    </div>
+
+    <section class="receiptCard">
+      <div class="receiptAmount">
+        <small>实付金额</small>
+        <b id="paidAmount">¥195.00</b>
+        <span>已使用“别冲动”券 -¥3.00</span>
+      </div>
+      <div class="receiptRows">
+        <div><span>服务类型</span><b id="receiptService">经济型</b></div>
+        <div><span>师傅</span><b>李师傅</b></div>
+        <div><span>师傅战绩</span><b>已打 327 人</b></div>
+        <div><span>本次结果</span><b class="green">和平收场</b></div>
+        <div><span>订单号</span><b id="orderNo">DDDD000000</b></div>
+      </div>
+    </section>
+
+    <section class="ratingCard">
+      <h3>给李师傅打个分</h3>
+      <div class="bigStars" id="bigStars">★★★★★</div>
+      <p id="ratingText">点击五星评价</p>
+    </section>
+
+    <button class="againBtn" id="againBtn">再来一单</button>
+    <button class="aboutLink" id="aboutLink">关于</button>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <div id="aboutModal" class="modal hidden">
+    <div class="modalPanel">
+      <div class="modalGrab"></div>
+      <h3>关于滴滴代打</h3>
+      <p>这是一个网络梗互动 Demo，用于还原“有没有滴滴代打，叫一个”的恶搞体验。页面不会连接任何真实服务，也不会呼叫现实中的任何人。</p>
+      <button id="closeAbout">知道了</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
