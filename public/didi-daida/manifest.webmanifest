@@ -1,0 +1,9 @@
+{
+  "name": "滴滴代打",
+  "short_name": "滴滴代打",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": []
+}
