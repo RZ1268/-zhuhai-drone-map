@@ -1,8 +1,199 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#0b0d12"><title>PairChat</title><script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script><style>
-:root{--b:#0b0d12;--p:#131824;--p2:#1b2231;--l:#293246;--t:#f5f7fb;--m:#8d99ad;--a:#647cff;--g:#37d695;--r:#ff6574;--safe:env(safe-area-inset-bottom)}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;background:var(--b);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}button,input,textarea{font:inherit}.app{height:100dvh;max-width:720px;margin:auto;display:flex;flex-direction:column}.top{height:58px;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid var(--l)}.dot{width:8px;height:8px;border-radius:50%;background:#596274;margin-right:9px}.dot.on{background:var(--g)}.brand{font-weight:800;font-size:19px}.grow{flex:1}.round{width:38px;height:38px;border:0;border-radius:12px;background:var(--p2);color:#fff;font-size:20px}.main{position:relative;flex:1;min-height:0}.page{display:none;position:absolute;inset:0;overflow:auto;padding:16px 14px 92px}.page.on{display:block}.h1{font-size:27px;font-weight:850}.sub{font-size:13px;color:var(--m);line-height:1.5}.card{background:var(--p);border:1px solid var(--l);border-radius:18px;padding:14px;margin:13px 0}.row{display:flex;gap:9px;align-items:center}.inp{width:100%;border:1px solid var(--l);background:#0f131c;color:#fff;border-radius:14px;padding:13px;outline:0}.btn{border:0;border-radius:13px;padding:12px 14px;background:var(--a);color:#fff;font-weight:700}.btn2{border:0;border-radius:13px;padding:12px 14px;background:var(--p2);color:#fff}.code{font:15px ui-monospace,Menlo,monospace;word-break:break-all;border:1px dashed #3a4864;background:#0f131c;border-radius:13px;padding:12px;margin:8px 0}.contact{display:flex;gap:11px;align-items:center;padding:12px 2px;border-bottom:1px solid var(--l)}.contact:last-child{border-bottom:0}.av{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#687cff,#9a68ff);font-weight:800}.meta{min-width:0;flex:1}.name{font-weight:750}.last{font-size:12px;color:var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}.badge{background:var(--a);font-size:11px;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;padding:0 6px}.empty{text-align:center;color:var(--m);padding:30px 5px}.sec{font-size:12px;color:var(--m);margin:19px 3px 7px}.nav{height:68px;padding:7px 15px calc(7px + var(--safe));border-top:1px solid var(--l);display:flex}.nav button{flex:1;border:0;background:transparent;color:var(--m);font-size:11px}.nav button.on{color:#98a7ff}.ico{display:block;font-size:22px;margin-bottom:2px}.chat{display:none;position:absolute;inset:0;background:var(--b);z-index:10;flex-direction:column}.chat.on{display:flex}.ch{height:58px;border-bottom:1px solid var(--l);display:flex;align-items:center;gap:9px;padding:0 10px}.back{border:0;background:transparent;color:#9aa8ff;font-size:28px}.ct{font-weight:750}.cs{font-size:11px;color:var(--m)}.msgs{flex:1;overflow:auto;padding:14px 11px}.mr{display:flex;margin:7px 0}.mr.mine{justify-content:flex-end}.bubble{max-width:78%;padding:9px 11px;border-radius:18px 18px 18px 5px;background:#202839;line-height:1.35;word-break:break-word}.mine .bubble{background:#536bfa;border-radius:18px 18px 5px 18px}.bubble img{max-width:100%;max-height:360px;border-radius:12px;display:block}.mi{font-size:10px;opacity:.65;text-align:right;margin-top:4px}.typing{height:17px;color:var(--m);font-size:11px;padding:0 14px}.composer{display:flex;gap:8px;align-items:flex-end;padding:8px 9px calc(8px + var(--safe));border-top:1px solid var(--l);background:var(--p)}.txt{flex:1;resize:none;max-height:110px;min-height:40px;border:1px solid var(--l);background:#0f131c;color:#fff;border-radius:16px;padding:10px;outline:0}.send,.plus{width:40px;height:40px;border:0;border-radius:50%;color:#fff;font-size:18px}.send{background:var(--a)}.plus{background:var(--p2)}.sheetw{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:flex-end}.sheetw.on{display:flex}.sheet{width:100%;max-width:720px;margin:auto;background:#151a27;border-radius:22px 22px 0 0;padding:18px 15px calc(18px + var(--safe));border:1px solid var(--l)}.sheet h3{margin:0 0 6px}.actions{display:flex;gap:9px;margin-top:13px}.actions>*{flex:1}.toast{display:none;position:fixed;z-index:99;left:50%;bottom:88px;transform:translateX(-50%);padding:9px 13px;border-radius:12px;background:#232b3c;border:1px solid #3a465f;font-size:13px}.toast.on{display:block}.safe{font:15px ui-monospace,Menlo,monospace;letter-spacing:1px}
-</style></head><body><div class="app"><div class="top"><div id="dot" class="dot"></div><div class="brand">PairChat</div><div class="grow"></div><button id="addTop" class="round">＋</button></div><div class="main"><section id="chats" class="page on"><div class="h1">聊天</div><div class="sub">点对点连接 · 端到端加密</div><div id="chatList" class="card"></div></section><section id="friends" class="page"><div class="h1">好友</div><div class="sub">双方手机都打开 PairChat，输入好友码即可添加。</div><div class="card"><div class="row"><input id="fc" class="inp" placeholder="好友码"><button id="fa" class="btn">添加</button></div></div><div id="reqs"></div><div class="sec">联系人</div><div id="fl" class="card"></div></section><section id="me" class="page"><div class="h1">我的</div><div class="card"><div class="sub">昵称</div><div class="row" style="margin-top:7px"><input id="nm" class="inp" maxlength="24"><button id="save" class="btn2">保存</button></div><div class="sec">我的好友码</div><div id="code" class="code">连接中…</div><div class="actions"><button id="copy" class="btn2">复制</button><button id="share" class="btn">分享邀请</button></div></div><div class="card"><div class="sub">本机身份安全码</div><div id="fp" class="safe" style="margin-top:8px">生成中…</div><div class="sub" style="margin-top:8px">私钥只保存在这台设备。不要清除本网站 Safari 数据，否则会生成新身份。</div></div></section><section id="chat" class="chat"><div class="ch"><button id="back" class="back">‹</button><div id="cav" class="av" style="width:36px;height:36px">P</div><div><div id="cn" class="ct">好友</div><div id="cst" class="cs">离线</div></div><div class="grow"></div><button id="info" class="round" style="width:34px;height:34px">ⓘ</button></div><div id="typing" class="typing"></div><div id="msgs" class="msgs"></div><div class="composer"><input id="photo" type="file" accept="image/*" hidden><button id="photoB" class="plus">＋</button><textarea id="box" rows="1" class="txt" placeholder="消息"></textarea><button id="send" class="send">↑</button></div></section></div><nav class="nav"><button class="on" data-p="chats"><span class="ico">◉</span>聊天</button><button data-p="friends"><span class="ico">♙</span>好友</button><button data-p="me"><span class="ico">◎</span>我的</button></nav></div><div id="addS" class="sheetw"><div class="sheet"><h3>添加好友</h3><div class="sub">粘贴对方的 PairChat 好友码</div><input id="sc" class="inp" placeholder="pc-xxxxxxxxxxxxxxxx"><div class="actions"><button class="btn2 close">取消</button><button id="sa" class="btn">发送申请</button></div></div></div><div id="reqS" class="sheetw"><div class="sheet"><h3>好友申请</h3><div id="rt" class="sub"></div><div class="actions"><button id="rej" class="btn2">拒绝</button><button id="acc" class="btn">接受</button></div></div></div><div id="infoS" class="sheetw"><div class="sheet"><h3 id="in">会话信息</h3><div class="sub">好友码</div><div id="ic" class="code"></div><div class="sec">会话安全码</div><div id="safe" class="safe">尚未连接</div><div class="sub" style="margin-top:8px">两台手机显示的会话安全码应完全一致。首次添加时比较一次。</div><div class="actions"><button id="clear" class="btn2">清空本地记录</button><button class="btn close">完成</button></div></div></div><div id="toast" class="toast"></div><script>
-(()=>{'use strict';const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];const L=localStorage;let peer,myId='',cur='',incoming='';const con=new Map(),ses=new Map();let idKey=null;const KEY='pc2_';function toast(x){const e=$('#toast');e.textContent=x;e.classList.add('on');clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove('on'),2200)}function rnd(n=8){const a=new Uint8Array(n);crypto.getRandomValues(a);return [...a].map(x=>x.toString(16).padStart(2,'0')).join('')}function b64(x){let s='';new Uint8Array(x).forEach(v=>s+=String.fromCharCode(v));return btoa(s)}function ub(s){const z=atob(s),a=new Uint8Array(z.length);for(let i=0;i<z.length;i++)a[i]=z.charCodeAt(i);return a.buffer}function g(k,d=null){try{return JSON.parse(L.getItem(KEY+k))??d}catch{return d}}function s(k,v){L.setItem(KEY+k,JSON.stringify(v))}function contacts(){return g('contacts',{})}function putC(c){const z=contacts();z[c.id]=c;s('contacts',z)}function msgs(id){return g('m_'+id,[])}function putM(id,a){s('m_'+id,a.slice(-250))}function me(){return g('name','我')}function ini(x){return(x||'P').trim().slice(0,1).toUpperCase()||'P'}async function identity(){let q=g('identity');if(q){idKey={pub:q.pub,priv:await crypto.subtle.importKey('jwk',q.priv,{name:'ECDH',namedCurve:'P-256'},false,['deriveBits'])};return}const k=await crypto.subtle.generateKey({name:'ECDH',namedCurve:'P-256'},true,['deriveBits']),pub=await crypto.subtle.exportKey('jwk',k.publicKey),priv=await crypto.subtle.exportKey('jwk',k.privateKey);s('identity',{pub,priv});idKey={pub,priv:k.privateKey}}async function fp(j){const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(j.x+'.'+j.y));return[...new Uint8Array(d)].slice(0,8).map(x=>x.toString(16).padStart(2,'0')).join('').match(/.{1,4}/g).join(' ')}async function session(j,pid){const pk=await crypto.subtle.importKey('jwk',j,{name:'ECDH',namedCurve:'P-256'},false,[]),bits=await crypto.subtle.deriveBits({name:'ECDH',public:pk},idKey.priv,256),sids=[myId,pid].sort().join('|'),mix=new Uint8Array(bits.byteLength+sids.length);mix.set(new Uint8Array(bits));mix.set(new TextEncoder().encode(sids),bits.byteLength);const h=await crypto.subtle.digest('SHA-256',mix),key=await crypto.subtle.importKey('raw',h,'AES-GCM',false,['encrypt','decrypt']),pp=[JSON.stringify(idKey.pub),JSON.stringify(j)].sort().join('|'),sh=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(sids+'|'+pp)),safe=[...new Uint8Array(sh)].slice(0,10).map(x=>x.toString(16).padStart(2,'0')).join('').match(/.{1,5}/g).join(' ');return{key,safe}}async function enc(pid,o){const q=ses.get(pid),iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},q.key,new TextEncoder().encode(JSON.stringify(o)));return{t:'e',iv:b64(iv),ct:b64(ct)}}async function dec(pid,o){const q=ses.get(pid),pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:new Uint8Array(ub(o.iv))},q.key,ub(o.ct));return JSON.parse(new TextDecoder().decode(pt))}async function sendS(pid,o){const c=con.get(pid);if(!c?.open||!ses.has(pid))throw 0;c.send(await enc(pid,o))}function setup(c){const pid=c.peer;if(con.get(pid)?.open)return;con.set(pid,c);c.on('open',()=>c.send({t:'h',id:myId,name:me(),pub:idKey.pub}));c.on('data',d=>data(pid,c,d));c.on('close',()=>{con.delete(pid);ses.delete(pid);render();head()});c.on('error',()=>{})}async function data(pid,c,d){try{if(d.t==='h'){ses.set(pid,await session(d.pub,pid));let x=contacts()[pid];if(x){x.name=d.name||x.name;putC(x)}c.send(await enc(pid,{t:'ready',name:me()}));if(x?.st==='out')c.send(await enc(pid,{t:'request',name:me()}));if(x?.st==='ok')c.send(await enc(pid,{t:'sync',name:me()}));flush(pid);render();head();return}if(d.t==='e')secure(pid,await dec(pid,d))}catch(e){console.warn(e)}}async function secure(pid,o){let x=contacts()[pid];if(o.t==='request'){x=x||{id:pid,st:'in',name:o.name||'新好友',u:0};x.st=x.st==='ok'?'ok':'in';x.name=o.name||x.name;putC(x);incoming=pid;$('#rt').textContent=x.name+' 想添加你为好友';$('#reqS').classList.add('on');render();return}if(o.t==='accept'){if(x){x.st='ok';x.name=o.name||x.name;putC(x);toast('已成为好友');render()}return}if(o.t==='reject'){toast('对方暂未接受');return}if(o.t==='sync'||o.t==='ready'){if(x){x.name=o.name||x.name;putC(x);render()}return}if(o.t==='typing'){if(cur===pid){$('#typing').textContent=o.on?'对方正在输入…':'';clearTimeout($('#typing').tt);$('#typing').tt=setTimeout(()=>$('#typing').textContent='',1800)}return}if(o.t==='msg'&&x?.st==='ok'){let a=msgs(pid);if(!a.some(m=>m.id===o.id)){a.push({id:o.id,dir:'in',kind:o.kind,body:o.body,ts:o.ts,state:'got'});putM(pid,a);x.last=o.kind==='image'?'[图片]':o.body;x.ts=o.ts;if(cur!==pid)x.u=(x.u||0)+1;putC(x)}sendS(pid,{t:'delivered',id:o.id}).catch(()=>{});if(cur===pid)sendS(pid,{t:'read',id:o.id}).catch(()=>{});render();draw();return}if(o.t==='delivered'||o.t==='read'){let a=msgs(pid),m=a.find(v=>v.id===o.id);if(m&&m.dir==='out'){m.state=o.t==='read'?'read':'delivered';putM(pid,a);draw()}return}}function connect(id){if(!peer?.open||!id||id===myId||con.get(id)?.open)return;try{setup(peer.connect(id,{reliable:true,serialization:'json'}))}catch{}}async function add(id){id=(id||'').trim();if(!/^pc-[a-f0-9]{16}$/i.test(id)){toast('好友码格式不对');return}if(id===myId){toast('不能添加自己');return}let x=contacts()[id]||{id,name:'等待对方',u:0};if(x.st!=='ok')x.st='out';putC(x);connect(id);setTimeout(()=>sendS(id,{t:'request',name:me()}).catch(()=>{}),900);toast('好友申请已发送');render()}async function accept(){let x=contacts()[incoming];if(!x)return;x.st='ok';x.u=0;putC(x);sendS(incoming,{t:'accept',name:me()}).catch(()=>{});$('#reqS').classList.remove('on');const p=incoming;incoming='';render();openChat(p)}function reject(){let x=contacts()[incoming];if(x){x.st='no';putC(x)}sendS(incoming,{t:'reject'}).catch(()=>{});$('#reqS').classList.remove('on');incoming='';render()}async function sendMsg(kind,body){if(!cur)return;let a=msgs(cur),m={id:'m-'+rnd(8),dir:'out',kind,body,ts:Date.now(),state:'queued'};a.push(m);putM(cur,a);let x=contacts()[cur];x.last=kind==='image'?'[图片]':body;x.ts=m.ts;putC(x);draw();render();try{await sendS(cur,{t:'msg',id:m.id,kind,body,ts:m.ts});m.state='sent';putM(cur,a);draw()}catch{toast('对方离线，消息已排队')}}async function flush(pid){let a=msgs(pid),chg=false;for(const m of a.filter(v=>v.dir==='out'&&v.state==='queued')){try{await sendS(pid,{t:'msg',id:m.id,kind:m.kind,body:m.body,ts:m.ts});m.state='sent';chg=true}catch{break}}if(chg)putM(pid,a);draw()}function item(x){const e=document.createElement('div');e.className='contact';const av=document.createElement('div');av.className='av';av.textContent=ini(x.name);const m=document.createElement('div');m.className='meta';const n=document.createElement('div');n.className='name';n.textContent=x.name||x.id;const l=document.createElement('div');l.className='last';l.textContent=x.last||(con.get(x.id)?.open&&ses.has(x.id)?'在线 · 已加密':x.id);m.append(n,l);e.append(av,m);if(x.u){const b=document.createElement('div');b.className='badge';b.textContent=x.u;e.append(b)}e.onclick=()=>x.st==='ok'&&openChat(x.id);return e}function render(){const z=Object.values(contacts()),ok=z.filter(x=>x.st==='ok').sort((a,b)=>(b.ts||0)-(a.ts||0)),inc=z.filter(x=>x.st==='in');for(const id of ['chatList','fl']){const e=$('#'+id);e.innerHTML='';if(!ok.length)e.innerHTML='<div class="empty">暂无好友 / 聊天</div>';ok.forEach(x=>e.append(item(x)))}const r=$('#reqs');r.innerHTML='';if(inc.length){const t=document.createElement('div');t.className='sec';t.textContent='好友申请';r.append(t);const c=document.createElement('div');c.className='card';inc.forEach(x=>{const e=item(x);e.onclick=()=>{incoming=x.id;$('#rt').textContent=x.name+' 想添加你为好友';$('#reqS').classList.add('on')};c.append(e)});r.append(c)}}async function openChat(id){cur=id;let x=contacts()[id];x.u=0;putC(x);$('#cn').textContent=x.name||id;$('#cav').textContent=ini(x.name);$('#chat').classList.add('on');draw();head();for(const m of msgs(id).filter(v=>v.dir==='in').slice(-30))sendS(id,{t:'read',id:m.id}).catch(()=>{});render()}function draw(){if(!cur)return;const e=$('#msgs');e.innerHTML='';for(const m of msgs(cur)){const r=document.createElement('div');r.className='mr '+(m.dir==='out'?'mine':'');const b=document.createElement('div');b.className='bubble';if(m.kind==='image'){const im=document.createElement('img');im.src=m.body;b.append(im)}else{const t=document.createElement('div');t.textContent=m.body;b.append(t)}const q=document.createElement('div');q.className='mi';let st='';if(m.dir==='out')st={queued:' · 等待发送',sent:' · 已发送',delivered:' · 已送达',read:' · 已读'}[m.state]||'';q.textContent=new Date(m.ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+st;b.append(q);r.append(b);e.append(r)}e.scrollTop=e.scrollHeight}function head(){if(cur)$('#cst').textContent=con.get(cur)?.open&&ses.has(cur)?'在线 · 端到端加密':'离线 · 消息将排队'}function tab(p){$$('.page').forEach(x=>x.classList.toggle('on',x.id===p));$$('.nav button').forEach(x=>x.classList.toggle('on',x.dataset.p===p))}async function image(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{let w=im.width,h=im.height,M=1200;if(w>M||h>M){const k=Math.min(M/w,M/h);w*=k;h*=k}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.68))};im.onerror=no;im.src=u})}
-$$('.nav button').forEach(b=>b.onclick=()=>tab(b.dataset.p));$('#addTop').onclick=()=>$('#addS').classList.add('on');$('.close').onclick=()=>$('#addS').classList.remove('on');$$('.close').forEach(b=>b.onclick=()=>b.closest('.sheetw').classList.remove('on'));$('#fa').onclick=()=>add($('#fc').value);$('#sa').onclick=()=>{add($('#sc').value);$('#addS').classList.remove('on')};$('#acc').onclick=accept;$('#rej').onclick=reject;$('#back').onclick=()=>{$('#chat').classList.remove('on');cur='';$('#typing').textContent=''};$('#send').onclick=()=>{const e=$('#box'),t=e.value.trim();if(t){sendMsg('text',t);e.value='';sendS(cur,{t:'typing',on:false}).catch(()=>{})}};$('#box').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#send').click()}});let tt;$('#box').oninput=()=>{if(!cur)return;sendS(cur,{t:'typing',on:true}).catch(()=>{});clearTimeout(tt);tt=setTimeout(()=>sendS(cur,{t:'typing',on:false}).catch(()=>{}),800)};$('#photoB').onclick=()=>$('#photo').click();$('#photo').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;if(f.size>10e6){toast('图片太大');return}toast('正在处理图片…');try{const d=await image(f);if(d.length>1800000){toast('图片仍太大');return}sendMsg('image',d)}catch{toast('图片处理失败')}e.target.value=''};$('#save').onclick=()=>{s('name',$('#nm').value.trim()||'我');toast('已保存')};$('#copy').onclick=async()=>{await navigator.clipboard.writeText(myId);toast('好友码已复制')};$('#share').onclick=async()=>{const url=location.href.split('?')[0]+'?add='+myId,text='加我 PairChat：'+myId+'\n'+url;try{if(navigator.share)await navigator.share({title:'PairChat',text,url});else{await navigator.clipboard.writeText(text);toast('邀请已复制')}}catch{}};$('#info').onclick=()=>{const x=contacts()[cur];$('#in').textContent=x?.name||'会话信息';$('#ic').textContent=cur;$('#safe').textContent=ses.get(cur)?.safe||'尚未连接';$('#infoS').classList.add('on')};$('#clear').onclick=()=>{if(cur){L.removeItem(KEY+'m_'+cur);draw();toast('本地记录已清空')}};setInterval(()=>{if(peer?.open)Object.values(contacts()).filter(x=>x.st==='ok'||x.st==='out').forEach(x=>connect(x.id))},10000);
-(async()=>{await identity();$('#fp').textContent=await fp(idKey.pub);$('#nm').value=me();myId=g('id');if(!myId){myId='pc-'+rnd(8);s('id',myId)}$('#code').textContent=myId;render();peer=new Peer(myId,{debug:0});peer.on('open',()=>{$('#dot').classList.add('on');Object.values(contacts()).forEach(x=>connect(x.id));const p=new URLSearchParams(location.search).get('add');if(p&&p!==myId){tab('friends');$('#fc').value=p;toast('好友码已填好，点“添加”')}});peer.on('connection',setup);peer.on('disconnected',()=>{$('#dot').classList.remove('on');setTimeout(()=>{try{peer.reconnect()}catch{}},1500)});peer.on('error',e=>{if(e.type!=='peer-unavailable')console.warn(e)})})().catch(e=>{console.error(e);toast('启动失败，请刷新')})})();
-</script></body></html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="referrer" content="no-referrer" />
+  <title>PairChat</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0f14;--card:#121821;--card2:#0f141c;--line:#222c39;--text:#f6f7f9;--muted:#98a4b3;--accent:#4d8dff;--good:#42d392;--danger:#ff6b6b}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC",system-ui,sans-serif;height:100%}
+    body{min-height:100dvh;display:flex;justify-content:center}
+    .app{width:min(760px,100%);min-height:100dvh;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top)) 16px calc(14px + env(safe-area-inset-bottom))}
+    .top{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 14px}.brand{font-size:20px;font-weight:750;letter-spacing:-.3px}.badge{font-size:12px;color:var(--good);background:rgba(66,211,146,.1);border:1px solid rgba(66,211,146,.24);padding:7px 9px;border-radius:999px}
+    .home{margin:auto 0}.card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+    h1{font-size:29px;line-height:1.16;margin:0 0 10px;letter-spacing:-.6px}.sub{color:var(--muted);font-size:15px;line-height:1.6;margin:0 0 22px}.status{display:flex;gap:9px;align-items:center;color:var(--muted);font-size:14px;margin:16px 2px 0}.dot{width:8px;height:8px;border-radius:50%;background:#586273}.dot.on{background:var(--good);box-shadow:0 0 0 5px rgba(66,211,146,.08)}
+    button{border:0;border-radius:16px;padding:15px 17px;font:inherit;font-weight:700;cursor:pointer}.primary{width:100%;background:var(--accent);color:white}.secondary{width:100%;margin-top:10px;background:#192231;color:#e8edf6;border:1px solid #263244}.ghost{background:transparent;color:var(--muted);padding:8px 10px}.invite{margin-top:15px;padding:13px;background:#0b1119;border:1px solid var(--line);border-radius:16px;display:none}.invite.show{display:block}.invite small{display:block;color:var(--muted);margin-bottom:7px}.invite code{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#d7e3f7}
+    .chat{display:none;flex:1;min-height:0}.chat.show{display:flex;flex-direction:column}.chatHead{display:flex;align-items:center;justify-content:space-between;padding:2px 0 12px;border-bottom:1px solid var(--line)}.peerState{display:flex;align-items:center;gap:8px}.peerState b{font-size:16px}.peerState span{display:block;color:var(--muted);font-size:12px;margin-top:2px}.messages{flex:1;overflow-y:auto;padding:16px 2px 10px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth}.bubble{max-width:82%;padding:11px 13px;border-radius:18px;line-height:1.45;font-size:16px;word-break:break-word}.me{align-self:flex-end;background:var(--accent);color:white;border-bottom-right-radius:6px}.them{align-self:flex-start;background:#18212d;border:1px solid #233043;border-bottom-left-radius:6px}.sys{align-self:center;color:var(--muted);font-size:12px;padding:7px 10px;background:#101720;border:1px solid var(--line);border-radius:999px}.composer{display:flex;gap:9px;padding-top:10px;border-top:1px solid var(--line)}.composer input{flex:1;background:#121923;border:1px solid #243044;color:var(--text);border-radius:16px;padding:14px 15px;font:inherit;outline:none}.composer input:focus{border-color:#3f6fb3}.send{background:var(--accent);color:white;padding:0 18px}.foot{color:#667384;font-size:11px;text-align:center;margin-top:12px;line-height:1.45}.err{color:#ffb0b0}
+    @media (max-width:520px){.app{padding-left:12px;padding-right:12px}.card{padding:20px 17px;border-radius:22px}h1{font-size:27px}.bubble{max-width:88%}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="top"><div class="brand">PairChat</div><div class="badge">端对端加密</div></div>
+
+    <section id="home" class="home">
+      <div class="card">
+        <h1 id="title">点一下，发链接，直接聊。</h1>
+        <p id="subtitle" class="sub">不再复制什么邀请口令、回应口令。创建邀请后直接用 iPhone 分享，对方点开链接就自动连接。</p>
+        <button id="createBtn" class="primary">创建邀请并分享</button>
+        <button id="shareBtn" class="secondary" style="display:none">再次分享邀请链接</button>
+        <div id="inviteBox" class="invite"><small>邀请链接</small><code id="inviteLink"></code></div>
+        <div class="status"><i id="statusDot" class="dot"></i><span id="statusText">正在连接信令服务…</span></div>
+      </div>
+      <div class="foot">消息正文使用 AES-256-GCM 加密，密钥只放在邀请链接的 # 后面；网页服务器和 PeerJS 信令服务拿不到这段密钥。聊天内容通过 WebRTC 点对点传输。</div>
+    </section>
+
+    <section id="chat" class="chat">
+      <div class="chatHead">
+        <div class="peerState"><i class="dot on"></i><div><b>已建立加密连接</b><span>AES-256-GCM · WebRTC</span></div></div>
+        <button id="closeBtn" class="ghost">断开</button>
+      </div>
+      <div id="messages" class="messages"></div>
+      <form id="form" class="composer">
+        <input id="input" autocomplete="off" enterkeyhint="send" placeholder="发消息…" maxlength="4000" />
+        <button class="send" type="submit">发送</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+  (() => {
+    const $ = id => document.getElementById(id);
+    const enc = new TextEncoder();
+    const dec = new TextDecoder();
+    const state = { peer:null, conn:null, key:null, inviteUrl:null, isHost:false };
+
+    const b64u = bytes => btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    const unb64u = s => {
+      s = s.replace(/-/g,'+').replace(/_/g,'/');
+      while (s.length % 4) s += '=';
+      const raw = atob(s); const out = new Uint8Array(raw.length);
+      for (let i=0;i<raw.length;i++) out[i]=raw.charCodeAt(i); return out;
+    };
+    const rand = n => { const a=new Uint8Array(n); crypto.getRandomValues(a); return a; };
+    const randId = n => b64u(rand(n)).replace(/[^a-zA-Z0-9]/g,'').slice(0,n*2);
+    const getPeerId = () => {
+      let id = localStorage.getItem('pc_peer_id');
+      if (!id) { id = 'pc-' + randId(14); localStorage.setItem('pc_peer_id', id); }
+      return id;
+    };
+    const loadInvites = () => { try{return JSON.parse(localStorage.getItem('pc_invites')||'{}')}catch{return{}} };
+    const saveInvites = x => localStorage.setItem('pc_invites', JSON.stringify(x));
+    const setStatus = (text,on=false,err=false) => { $('statusText').textContent=text; $('statusText').className=err?'err':''; $('statusDot').className='dot'+(on?' on':''); };
+
+    async function importKey(raw){ return crypto.subtle.importKey('raw',raw,{name:'AES-GCM'},false,['encrypt','decrypt']); }
+    async function seal(obj){
+      const iv=rand(12); const plain=enc.encode(JSON.stringify(obj));
+      const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},state.key,plain);
+      return {v:1,iv:b64u(iv),c:b64u(new Uint8Array(ct))};
+    }
+    async function openBox(box){
+      if(!box || box.v!==1) throw new Error('bad box');
+      const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64u(box.iv)},state.key,unb64u(box.c));
+      return JSON.parse(dec.decode(pt));
+    }
+
+    function addMessage(text,who){
+      const d=document.createElement('div'); d.className='bubble '+who; d.textContent=text; $('messages').appendChild(d); $('messages').scrollTop=$('messages').scrollHeight;
+    }
+    function addSystem(text){ const d=document.createElement('div'); d.className='sys'; d.textContent=text; $('messages').appendChild(d); }
+    function showChat(){ $('home').style.display='none'; $('chat').classList.add('show'); setTimeout(()=>$('input').focus(),150); }
+    function resetHome(msg='连接已断开'){
+      try{state.conn&&state.conn.close()}catch{} state.conn=null; state.key=null;
+      $('chat').classList.remove('show'); $('home').style.display='block'; $('messages').innerHTML=''; setStatus(msg,true,false);
+    }
+
+    async function bindConnection(conn, rawKey, hostSide){
+      if(state.conn && state.conn.open) { try{conn.close()}catch{} return; }
+      state.conn=conn; state.isHost=hostSide; state.key=await importKey(rawKey);
+      conn.on('open',()=>{ showChat(); addSystem('已建立端对端加密连接'); });
+      conn.on('data', async data => { try{ const msg=await openBox(data); if(msg.t==='m' && typeof msg.text==='string') addMessage(msg.text,'them'); }catch(e){ addSystem('收到一条无法解密的消息'); } });
+      conn.on('close',()=>resetHome('对方已断开'));
+      conn.on('error',()=>resetHome('连接出现错误'));
+    }
+
+    async function createInvite(){
+      if(!state.peer || state.peer.disconnected){ setStatus('信令服务还没准备好，等一秒再点',false,true); return; }
+      const inviteId=randId(9); const rawKey=rand(32); const invites=loadInvites(); invites[inviteId]=b64u(rawKey); saveInvites(invites);
+      const base=location.origin + location.pathname;
+      const url=base+'?to='+encodeURIComponent(state.peer.id)+'&i='+encodeURIComponent(inviteId)+'#k='+b64u(rawKey);
+      state.inviteUrl=url; $('inviteLink').textContent=url; $('inviteBox').classList.add('show'); $('shareBtn').style.display='block';
+      setStatus('邀请已创建，等对方点开',true,false);
+      await shareInvite();
+    }
+    async function shareInvite(){
+      if(!state.inviteUrl) return;
+      try{
+        if(navigator.share){ await navigator.share({title:'PairChat 邀请',text:'点开就能和我端对端加密聊天：',url:state.inviteUrl}); }
+        else { await navigator.clipboard.writeText(state.inviteUrl); setStatus('链接已复制，直接发给对方',true,false); }
+      }catch(e){ if(e && e.name!=='AbortError') { try{await navigator.clipboard.writeText(state.inviteUrl); setStatus('链接已复制，直接发给对方',true,false);}catch{} } }
+    }
+
+    async function connectFromInvite(){
+      const qs=new URLSearchParams(location.search); const hs=new URLSearchParams(location.hash.slice(1));
+      const to=qs.get('to'), inviteId=qs.get('i'), keyText=hs.get('k');
+      if(!to || !inviteId || !keyText) return false;
+      $('title').textContent='正在建立加密连接…'; $('subtitle').textContent='不用输入任何东西，保持这个页面打开就行。'; $('createBtn').style.display='none';
+      setStatus('正在连接对方…',false,false);
+      try{
+        const rawKey=unb64u(keyText); if(rawKey.length!==32) throw new Error('bad key');
+        const conn=state.peer.connect(to,{reliable:true,metadata:{inviteId}});
+        await bindConnection(conn,rawKey,false);
+        setTimeout(()=>{ if(!conn.open) setStatus('暂时连不上。让对方保持页面打开，然后刷新一次。',false,true); },9000);
+      }catch(e){ setStatus('这个邀请链接无效或已经损坏',false,true); }
+      return true;
+    }
+
+    function start(){
+      if(!window.Peer){ setStatus('PeerJS 加载失败，请检查网络后刷新',false,true); return; }
+      const id=getPeerId(); state.peer=new Peer(id,{debug:0});
+      state.peer.on('open', async ()=>{
+        setStatus('已就绪',true,false);
+        await connectFromInvite();
+      });
+      state.peer.on('connection', async conn=>{
+        const inviteId=conn.metadata && conn.metadata.inviteId; const invites=loadInvites(); const keyText=inviteId && invites[inviteId];
+        if(!keyText){ conn.on('open',()=>conn.close()); return; }
+        try{ await bindConnection(conn,unb64u(keyText),true); }
+        catch{ try{conn.close()}catch{} }
+      });
+      state.peer.on('error', e=>{
+        if(e && e.type==='unavailable-id'){
+          localStorage.removeItem('pc_peer_id'); setStatus('身份冲突，正在重新生成…',false,true); setTimeout(()=>location.reload(),500);
+        } else setStatus('网络连接失败，刷新再试',false,true);
+      });
+      state.peer.on('disconnected',()=>setStatus('信令服务暂时断开',false,true));
+    }
+
+    $('createBtn').addEventListener('click',createInvite);
+    $('shareBtn').addEventListener('click',shareInvite);
+    $('closeBtn').addEventListener('click',()=>resetHome('已断开连接'));
+    $('form').addEventListener('submit', async e=>{
+      e.preventDefault(); const text=$('input').value.trim(); if(!text || !state.conn || !state.conn.open || !state.key) return;
+      $('input').value=''; addMessage(text,'me');
+      try{ state.conn.send(await seal({t:'m',text,ts:Date.now()})); }catch{ addSystem('发送失败'); }
+    });
+    window.addEventListener('beforeunload',()=>{ try{state.conn&&state.conn.close()}catch{} });
+
+    async function loadPeerJS(){
+      if(window.Peer) return true;
+      const urls=[
+        'https://cdn.bootcdn.net/ajax/libs/peerjs/1.5.5/peerjs.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.5/peerjs.min.js',
+        'https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js'
+      ];
+      setStatus('正在加载连接组件…',false,false);
+      for(const url of urls){
+        const ok=await new Promise(resolve=>{
+          const sc=document.createElement('script'); let done=false;
+          const finish=v=>{if(done)return;done=true;clearTimeout(timer);if(!v)sc.remove();resolve(v)};
+          const timer=setTimeout(()=>finish(false),4500);
+          sc.src=url; sc.async=true; sc.onload=()=>finish(!!window.Peer); sc.onerror=()=>finish(false);
+          document.head.appendChild(sc);
+        });
+        if(ok) return true;
+      }
+      return false;
+    }
+
+    (async()=>{
+      const ok=await loadPeerJS();
+      if(!ok){setStatus('连接组件加载失败。换个网络后点刷新。',false,true);return;}
+      start();
+    })();
+  })();
+  </script>
+</body>
+</html>
